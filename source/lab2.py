@@ -59,4 +59,5 @@ def record_video(filename, duration):
     cv2.imshow("Chaos", img)
     cv2.waitKey(0)
 
+
 record_video("record.avi", 10)
