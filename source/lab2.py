@@ -28,7 +28,7 @@ def record_video(filename, duration):
 
     cap.release()
     cv2.destroyWindow("Recording...")
-    cv2.imwrite("shot.jpg", new_frame)
+    cv2.imwrite(".\\..\\assets\\shot.jpg", new_frame)
     cv2.imshow("Shot", new_frame)
     cv2.waitKey(0)
 
@@ -49,15 +49,15 @@ def record_video(filename, duration):
     rgb = np.concatenate((new_frame, r1), axis=1)
     rgb1 = np.concatenate((g1, b1), axis=1)
     rgb = np.concatenate((rgb, rgb1), axis=0)
-    cv2.imwrite("orig_r_g_b.jpg", rgb)
+    cv2.imwrite(".\\..\\assets\\orig_r_g_b.jpg", rgb)
     cv2.imshow("Orig/Red/Green/Blue", rgb)
     cv2.waitKey(0)
 
     b, g, r = cv2.split(new_frame)
     img = cv2.merge((r, r, r)) + cv2.merge((b, b, b)) + cv2.merge((g, g, g)) + new_frame + r1 + g1 + b1 + r1 + new_frame
-    cv2.imwrite("chaos.jpg", img)
+    cv2.imwrite(".\\..\\assets\\chaos.jpg", img)
     cv2.imshow("Chaos", img)
     cv2.waitKey(0)
 
 
-record_video("record.avi", 10)
+record_video(".\\..\\assets\\record.avi", 10)
