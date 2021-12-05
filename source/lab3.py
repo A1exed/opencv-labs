@@ -39,13 +39,25 @@ def contrast(img, value):
 
 
 def contrast_component(img):
-    lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+    b0, g0, r = cv2.split(img)
+    r1 = np.zeros(np.shape(img), np.uint8)
+    r1[:, :, 2] = r
+    lab = cv2.cvtColor(r1, cv2.COLOR_BGR2LAB)
     l, a, b = cv2.split(lab)
     clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
     cl = clahe.apply(l)
     limg = cv2.merge((cl, a, b))
     final = cv2.cvtColor(limg, cv2.COLOR_LAB2BGR)
-    cv2.imshow("Contrasted RED channel", final)
+    b, g, r = cv2.split(final)
+    img = cv2.merge((b0, g0, r))
+    cv2.imshow("Contrasted RED channel", img)
+    cv2.waitKey(0)
+
+
+def transform(img):
+    b, g, r = cv2.split(img)
+    img = cv2.merge((b * 3, g * 2, r * 4))
+    cv2.imshow("Transformed", img)
     cv2.waitKey(0)
 
 
@@ -68,10 +80,11 @@ def red_detect(img):
     cv2.waitKey(0)
 
 
-image = cv2.imread(".\\..\\assets\\cherry.jpg")
-image1 = cv2.imread(".\\..\\assets\\cherry.jpg")
-image2 = cv2.imread(".\\..\\assets\\cherry.jpg")
-image3 = cv2.imread(".\\..\\assets\\red.jpg")
+image = cv2.imread(".\\..\\assets\\caps.jpg")
+image1 = cv2.imread(".\\..\\assets\\caps.jpg")
+image2 = cv2.imread(".\\..\\assets\\taxi-1932107_640.jpg")
+image3 = cv2.imread(".\\..\\assets\\taxi-1932107_640.jpg")
+image4 = cv2.imread(".\\..\\assets\\taxi-1932107_640.jpg")
 image5 = cv2.imread(".\\..\\assets\\taxi-1932107_640.jpg")
 image6 = cv2.imread(".\\..\\assets\\red.jpg")
 cv2.imshow("Original", image)
@@ -79,6 +92,7 @@ cv2.waitKey(0)
 draw_contours(image1, 150)
 contrast(image2, 3.0)
 contrast_component(image3)
+transform(image4)
 cv2.imshow("HSV", cv2.cvtColor(image5, cv2.COLOR_BGR2HSV))
 cv2.waitKey(0)
 cv2.imshow("LAB", cv2.cvtColor(image5, cv2.COLOR_BGR2LAB))
